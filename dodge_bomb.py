@@ -18,6 +18,12 @@ def main():
     pg.draw.circle(bomb_surface, (255, 0, 0), (10, 10), 10)
     bomb_surface.set_colorkey((0, 0, 0))  # 黒を透明に設定
     
+    # 爆弾の初期位置と速度
+    bomb_x = random.randint(0, WIDTH - 20)
+    bomb_y = random.randint(0, HEIGHT - 20)
+    vx = 5
+    vy = 5
+    
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -26,14 +32,19 @@ def main():
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, [900, 400])
         
-        # ランダムな位置に爆弾を配置
-        bomb_x = random.randint(0, WIDTH - 20)
-        bomb_y = random.randint(0, HEIGHT - 20)
+        # 爆弾を移動し、画面内に制限する
+        bomb_x += vx
+        bomb_y += vy
+        if bomb_x < 0 or bomb_x > WIDTH - 20:
+            vx = -vx
+        if bomb_y < 0 or bomb_y > HEIGHT - 20:
+            vy = -vy
+        
         screen.blit(bomb_surface, (bomb_x, bomb_y))
         
         pg.display.update()
         tmr += 1
-        clock.tick(10)
+        clock.tick(50)  # FPSを50に変更
 
 if __name__ == "__main__":
     pg.init()
