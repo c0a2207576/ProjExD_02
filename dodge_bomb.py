@@ -9,7 +9,7 @@ delta = {
     pg.K_DOWN: (0, +5),
     pg.K_LEFT: (-5, 0),
     pg.K_RIGHT: (+5, 0),
-    pg.K_UP and pg.K_LEFT:(-5,-5),
+    pg.K_UP and pg.K_LEFT:(-5,-5),######?????????????????????????
     pg.K_UP and pg.K_RIGHT:(+5,-5),
     pg.K_DOWN and pg.K_LEFT:(-5,+5),
     pg.K_DOWN and pg.K_RIGHT:(+5,+5)
@@ -32,7 +32,8 @@ def main():
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
     kk_rct = kk_img.get_rect()
     kk_rct.center = (900, 400)
-
+    be_img = pg.image.load("ex02/fig/6.png")
+    be_img = pg.transform.rotozoom(be_img,0, 2.0)
     bd_img = pg.Surface((20, 20))
     bd_img.set_colorkey((0, 0, 0))
     pg.draw.circle(bd_img, (255, 0, 0), (10, 10), 10)
@@ -53,6 +54,9 @@ def main():
                 return
 
         if kk_rct.colliderect(bd_rct):
+            screen.blit(bg_img, [0, 0])
+            screen.blit(be_img, kk_rct)
+            pg.display.update()
             print("ゲームオーバー")
             return
 
